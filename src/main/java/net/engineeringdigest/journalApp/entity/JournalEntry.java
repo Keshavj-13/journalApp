@@ -1,23 +1,24 @@
 package net.engineeringdigest.journalApp.entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Document(collection = "journal_entries")
+@Entity
+@Table(name = "journal_entries")
 @Data
 public class JournalEntry {
+
     @Id
-    private ObjectId id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;              // BIGINT UNSIGNED in MySQL
 
-    private String title;
+    private String title;         // VARCHAR(255)
 
-    private String content;
+    @Column(columnDefinition = "TEXT")
+    private String content;       // TEXT
 
-    private LocalDateTime date;
+    private LocalDateTime date;   // DATETIME(6)
 }

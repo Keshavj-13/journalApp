@@ -2,7 +2,6 @@ package net.engineeringdigest.journalApp.Service;
 
 import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepo;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,11 +21,11 @@ public class JournalEntryService {
         return journalentryrepo.findAll();
     }
 
-    public Optional<JournalEntry> findById(ObjectId id){
+    public Optional<JournalEntry> findById(Long id){
         return journalentryrepo.findById(id);
     }
 
-    public void deleteById(ObjectId id){
+    public void deleteById(Long id){
         journalentryrepo.deleteById(id);
     }
 }

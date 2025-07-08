@@ -2,7 +2,6 @@ package net.engineeringdigest.journalApp.controller;
 
 import net.engineeringdigest.journalApp.Service.JournalEntryService;
 import net.engineeringdigest.journalApp.entity.JournalEntry;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +38,7 @@ public class JournalEntryController {
         }
     }
     @GetMapping("id/{myId}")
-    public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId myId){
+    public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable Long myId){
         Optional<JournalEntry> journalEntry = journalEntryService.findById(myId);
         if(journalEntry.isPresent()){
             return new ResponseEntity<>(journalEntry.get(), HttpStatus.OK);
@@ -47,12 +46,12 @@ public class JournalEntryController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @DeleteMapping("id/{myId}")
-    public ResponseEntity<?> DltJournalEntryById(@PathVariable ObjectId myId){
+    public ResponseEntity<?> DltJournalEntryById(@PathVariable Long myId){
         journalEntryService.deleteById(myId);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @PutMapping("id/{Id}")
-    public ResponseEntity<?> UpdJournalEntryById(@PathVariable ObjectId Id, @RequestBody JournalEntry newEntry){
+    public ResponseEntity<?> UpdJournalEntryById(@PathVariable Long Id, @RequestBody JournalEntry newEntry){
         JournalEntry old = journalEntryService.findById(Id).orElse(null);
         if(old != null){
             old.setTitle(newEntry.getTitle() != null && !newEntry.getTitle().equals("") ? newEntry.getTitle() : old.getTitle());
