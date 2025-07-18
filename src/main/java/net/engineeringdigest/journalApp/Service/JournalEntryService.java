@@ -1,10 +1,13 @@
 package net.engineeringdigest.journalApp.Service;
 
 import net.engineeringdigest.journalApp.entity.JournalEntry;
+import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepo;
+import net.engineeringdigest.journalApp.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,8 +16,14 @@ public class JournalEntryService {
     @Autowired
     private JournalEntryRepo journalentryrepo;
 
-    public void saveEntry(JournalEntry journalentry){
-        journalentryrepo.save(journalentry);
+    @Autowired
+    private UserService userService;
+
+    public void saveEntry(JournalEntry journalentry, String username){
+        User user = userService.findByUserName(username);
+        journalentry.setDate(LocalDateTime.now());
+        JournalEntry saved = journalentryrepo.save(journalentry);
+        user.getJournalEntries().add(saved);
     }
 
     public List<JournalEntry> getAll(){

@@ -1,7 +1,7 @@
 package net.engineeringdigest.journalApp.entity;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,11 +9,16 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "journal_entries")
 @Data
+@NoArgsConstructor
 public class JournalEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;              // BIGINT UNSIGNED in MySQL
+
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
+    User user;
 
     private String title;         // VARCHAR(255)
 
